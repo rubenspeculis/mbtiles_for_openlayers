@@ -14,13 +14,37 @@ function mbtiles_for_openlayers_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * Implements hook_ctools_plugin_type().
+ * OpenLayers Layer Types
+ *
+ * Provides information on layer types.  This is a CTools plugin.  Please
+ * see LAYER_TYPES.txt in the module for more information.
+ *
+ * @return
+ *   Return a nested associative array with the top level
+ *   being a unique string identifier key which corresponds to the
+ *   layers' types.  The next level being an array of key/value
+ *   pairs:
+ *   - "description":
+ *   - "layer_type":
  */
+function mbtiles_for_openlayers_openlayers_layer_types() {
+  // Take from openlayers.layer_types.inc
+  return array(
+    'openlayers_layer_type_mbtiles' => array(
+      'title' => t('Mbtiles'),
+      'description' => t('mbtiles'),
+      'path' => drupal_get_path('module', 'mbtiles_for_openlayers') .'/plugins/layer_types',
+      'layer_type' => array(
+        'path' => drupal_get_path('module', 'mbtiles_for_openlayers') .'/plugins/layer_types',
+        'file' => 'openlayers_layer_type_mbtiles.inc',
+        'class' => 'openlayers_layer_type_mbtiles',
+        'parent' => 'openlayers_layer_type',
+      ),
+    ),
+  );
+}
+
 function mbtiles_for_openlayers_ctools_plugin_type() {
-  // For backwards compatibility, we allow for the use
-  // of hooks to define these plugins.
-  //
-  // This should be removed in 7.x-3.x
   return array(
     'layer_types' => array(
       'use hooks' => TRUE,

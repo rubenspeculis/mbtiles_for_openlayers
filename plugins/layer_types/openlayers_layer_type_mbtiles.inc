@@ -9,18 +9,30 @@
  */
 class openlayers_layer_type_mbtiles extends openlayers_layer_type {
 
+  function __construct($layer = array(), $map = array()) {
+    parent::__construct($layer, $map);
+    if (isset($this->data)) {
+      $this->data += $this->options_init();
+      $this->data['baselayer'] = $this->data['isBaseLayer'];
+    }
+    else {
+      $this->data = $this->options_init();
+    }
+  }
+
   /**
    * Provide initial values for options.
    */
   function options_init() {
     return array(
+      'serverResolutions' => openlayers_get_resolutions('EPSG:900913'),
+      'maxExtent' => openlayers_get_extent('EPSG', '900913'),
       'layer_handler' => 'mbtiles',
       'type' => 'png',
       'inverse' => TRUE,
-      'wrapDateLine' => FALSE,
-      'zoomOffset' => 0,
       'url' => ''
     ) + parent::options_init();
+
   }
 
   /**
@@ -61,13 +73,6 @@ class openlayers_layer_type_mbtiles extends openlayers_layer_type {
           array_map('strval', openlayers_get_resolutions('EPSG:900913')),
         '#description' => t('The available zoom levels for the tiles.'),
       ),
-      'wrapDateLine' => array(
-        '#type' => 'checkbox',
-        '#title' => t('Wrap Dateline'),
-        '#default_value' => isset($this->data['wrapDateLine']) ?
-          $this->data['wrapDateLine'] : FALSE,
-        '#description' => t('Wrapping the dateline will cause the map to appear to repeat itself when going east or west.  This may not be supported by all tilesets.'),
-      ),
       'inverse' => array(
         '#type' => 'checkbox',
         '#title' => t('Is the Y coordinate flipped ?'),
@@ -84,7 +89,6 @@ class openlayers_layer_type_mbtiles extends openlayers_layer_type {
     parent::options_form_submit($form, $form_state);
     $form_state['values']['data']['url'] = explode("\n", $form_state['values']['data']['url']);
     $form_state['values']['data']['resolutions'] = array_map('floatval', array_values($form_state['values']['data']['resolutions']));
-    $form_state['values']['data']['wrapDateLine'] = (bool) $form_state['values']['data']['wrapDateLine'];
     $form_state['values']['data']['inverse'] = (bool) $form_state['values']['data']['inverse'];
   }
 

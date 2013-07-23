@@ -3,3 +3,4 @@ description = Adds additional Layer type for mbtiles
 core = 7.x
 dependencies[] = openlayers
 dependencies[] = ctools
+files[] = plugins/layer_types/openlayers_layer_type_mbtiles.inc

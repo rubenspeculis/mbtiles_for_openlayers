@@ -22,10 +22,9 @@ Drupal.openlayers.layer.mbtiles = function(title, map, options) {
 	    var ymax = 1 << z;
       y = ymax - y - 1;
 
-      return this.url + z + "/" + x + "/" + y + "." + this.type;
+      return this.url + this.layername + "/" + z + "/" + x + "/" + y + "." + this.type;
     }
   }
-
   options.projection = new OpenLayers.Projection(options.projection);
-  return new OpenLayers.Layer.mbtiles(title, options.url, options);
+  return new OpenLayers.Layer.TMS(title, options.url, options);
 };
