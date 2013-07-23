@@ -1,0 +1,5 @@
+name = Mbtiles for OpenLayers
+description = Adds additional Layer type for mbtiles
+core = 7.x
+dependencies[] = openlayers
+dependencies[] = ctools
