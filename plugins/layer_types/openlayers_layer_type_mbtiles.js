@@ -19,9 +19,11 @@ Drupal.openlayers.layer.mbtiles = function(title, map, options) {
       var y = Math.round((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
       var z = this.map.getZoom();
 
+
 	    var ymax = 1 << z;
       y = ymax - y - 1;
 
+      //console.log(this.url + this.layername + "/" + z + "/" + x + "/" + y + "." + this.type);
       return this.url + this.layername + "/" + z + "/" + x + "/" + y + "." + this.type;
     }
   }
