@@ -12,8 +12,6 @@ Drupal.openlayers.layer.mbtiles = function(title, map, options) {
     options.maxExtent = OpenLayers.Bounds.fromArray(options.maxExtent);
   }
 
-  console.log(options);
-
   if (options.inverse == true) {
     options.getURL = function(bounds) {
       var res = this.map.getResolution();
