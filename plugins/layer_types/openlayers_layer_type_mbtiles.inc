@@ -73,6 +73,12 @@ class openlayers_layer_type_mbtiles extends openlayers_layer_type {
           array_map('strval', openlayers_get_resolutions('EPSG:900913')),
         '#description' => t('The available zoom levels for the tiles.'),
       ),
+      'zoomOffset' => array(
+        '#type' => 'textfield',
+        '#title' => t('Zoom offset'),
+        '#default_value' => isset($this->data['zoomOffset']) ? $this->data['zoomOffset'] : 0,
+        '#description' => t('If your cache has more zoom levels than you want to provide access to with this layer, supply a zoomOffset.  This zoom offset is added to the current map zoom level to determine the level for a requested tile.  For example, if you supply a zoomOffset of 3, when the map is at the zoom 0, tiles will be requested from level 3 of your cache.  Default is 0 (assumes cache level and map zoom are equivalent).  Using zoomOffset is an alternative to setting serverResolutions if you only want to expose a subset of the server resolutions.'),
+      ),
       'inverse' => array(
         '#type' => 'checkbox',
         '#title' => t('Is the Y coordinate flipped ?'),

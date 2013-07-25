@@ -12,6 +12,8 @@ Drupal.openlayers.layer.mbtiles = function(title, map, options) {
     options.maxExtent = OpenLayers.Bounds.fromArray(options.maxExtent);
   }
 
+  console.log(options);
+
   if (options.inverse == true) {
     options.getURL = function(bounds) {
       var res = this.map.getResolution();
@@ -19,10 +21,13 @@ Drupal.openlayers.layer.mbtiles = function(title, map, options) {
       var y = Math.round((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
       var z = this.map.getZoom();
 
+      z = Number(z) + Number(options.zoomOffset);
 	    var ymax = 1 << z;
       y = ymax - y - 1;
 
+
       return this.url + this.layername + "/" + z + "/" + x + "/" + y + "." + this.type;
+
     }
   }
   options.projection = new OpenLayers.Projection(options.projection);
